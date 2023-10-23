@@ -7,6 +7,7 @@ from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
 class FindAllFoodCategoryQueryDto(BaseModel):
     description: Optional[constr(max_length=255)]
+    level: Optional[constr(max_length=1)]
 
     class Config:
         extra = Extra.forbid

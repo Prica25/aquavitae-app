@@ -28,14 +28,16 @@ class AuthService:
             }
         )
 
-        await self.user_interface.update_last_access(db, str(user.id))
-
-        return LoginPayloadDto(
+        response = LoginPayloadDto(
             user=user,
             expires_in=access_token.expires_in,
             access_token=access_token.access_token,
             token_type=access_token.token_type,
         )
+
+        await self.user_interface.update_last_access(db, str(user.id))
+
+        return response
 
     # ---------------------- PRIVATE METHODS ----------------------
     async def __validate_user(
