@@ -13,6 +13,7 @@ class UpdatePersonalDataDto(BaseModel):
     food_history: Optional[constr(max_length=1000)]
     bedtime: Optional[time]
     wake_up: Optional[time]
+    gender: Optional[str]
     activity_level_id: Optional[UUID] = Field(alias="activity_level")
 
     class Config:

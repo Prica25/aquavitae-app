@@ -8,6 +8,7 @@ from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 class FindAllPersonalDataQueryDto(BaseModel):
     first_name: Optional[constr(max_length=255)]
     last_name: Optional[constr(max_length=255)]
+    gender: Optional[constr()]
 
     class Config:
         extra = Extra.forbid
@@ -22,6 +23,7 @@ class OrderByPersonalDataQueryDto(BaseModel):
     bedtime: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
     wake_up: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
     activity_level: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
+    Optional[constr()]
 
     class Config:
         extra = Extra.forbid

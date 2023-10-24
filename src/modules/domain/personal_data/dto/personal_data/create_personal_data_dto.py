@@ -4,6 +4,9 @@ from uuid import UUID
 
 from pydantic import BaseModel, constr, Extra, Field
 
+from src.core.constants.enum.gender import Gender
+
+
 
 class CreatePersonalDataDto(BaseModel):
     first_name: constr(max_length=255)
@@ -13,6 +16,7 @@ class CreatePersonalDataDto(BaseModel):
     food_history: Optional[constr(max_length=1000)]
     bedtime: time
     wake_up: time
+    gender: Gender
     activity_level_id: UUID = Field(alias="activity_level")
     user_id: UUID = Field(alias="user")
 

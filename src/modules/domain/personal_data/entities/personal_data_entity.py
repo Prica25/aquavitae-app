@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
-from sqlalchemy import Column, Date, DateTime, ForeignKey, String, Time
+from sqlalchemy import Column, Date, DateTime, Enum, ForeignKey, String, Time
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from src.modules.infrastructure.database.base_entity import BaseEntity
+from src.core.constants.enum.gender import Gender
 
 
 @dataclass
@@ -16,6 +17,7 @@ class PersonalData(BaseEntity):
     food_history: String = Column(String(1000), nullable=True)
     bedtime: Time = Column(Time(timezone=True), nullable=False)
     wake_up: Time = Column(Time(timezone=True), nullable=False)
+    gender: Gender = Column(Enum(Gender), nullable=False)
 
     activity_level_id: UUID = Column(
         UUID(as_uuid=True), ForeignKey("activity_level.id"), nullable=True
@@ -34,6 +36,7 @@ class PersonalData(BaseEntity):
         birthday: DateTime,
         bedtime: Time,
         wake_up: Time,
+        gender: Gender,
         user_id: UUID,
         occupation: String = None,
         food_history: String = None,
