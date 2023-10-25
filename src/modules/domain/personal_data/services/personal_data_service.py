@@ -25,10 +25,14 @@ class PersonalDataService:
     async def create_personal_data(
         self, personal_data_dto: CreatePersonalDataDto, db: Session
     ) -> Optional[PersonalDataDto]:
-        new_personal_data = await self.personal_data_repository.create(personal_data_dto, db)
+        try:
+            new_personal_data = await self.personal_data_repository.create(personal_data_dto, db)
 
-        new_personal_data = self.personal_data_repository.save(new_personal_data, db)
-        return PersonalDataDto(**new_personal_data.__dict__)
+            new_personal_data = self.personal_data_repository.save(new_personal_data, db)
+            return PersonalDataDto(**new_personal_data.__dict__)
+        except Exception as e:
+                db.rollback()
+                raise e
 
     async def find_one_personal_data(self, user_id: str, db: Session) -> Optional[PersonalDataDto]:
         response = await self.find_several_personal_data_by_id([user_id], db)
