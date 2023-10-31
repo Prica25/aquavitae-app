@@ -21,9 +21,9 @@ class AntecedentService:
 
     # ---------------------- PUBLIC METHODS ----------------------
     async def create_antecedent(
-        self, antecedent_type_dto: CreateAntecedentDto, db: Session
+        self, antecedent_dto: CreateAntecedentDto, db: Session
     ) -> Optional[AntecedentDto]:
-        new_antecedent = await self.antecedent_repository.create(antecedent_type_dto, db)
+        new_antecedent = await self.antecedent_repository.create(antecedent_dto, db)
 
         new_antecedent = self.antecedent_repository.save(new_antecedent, db)
         return AntecedentDto.from_orm(new_antecedent)

@@ -52,5 +52,6 @@ class PersonalData(BaseEntity):
         self.food_history = food_history
         self.bedtime = bedtime
         self.wake_up = wake_up
+        self.gender = gender
         self.activity_level_id = activity_level_id
         self.user_id = user_id
