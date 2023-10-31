@@ -9,7 +9,6 @@ from src.modules.domain.food.dto.food.food_dto import FoodDto
 from src.modules.infrastructure.user.dto.user_dto import UserDto
 
 class SpecificityDto(BaseDto):
-    description: constr(max_length=255)
     specificity_type: Optional[Union[SpecificityTypeDto, UUID]]
     user: Optional[Union[UserDto, UUID]]
     food: Optional[Union[FoodDto, UUID]]

@@ -5,7 +5,7 @@ from pydantic import BaseModel, constr, Extra, Field
 
 
 class UpdateSpecificityDto(BaseModel):
-    description: Optional[constr(max_length=255)]
+    user_id: Optional[UUID] = Field(alias="user")
     specificity_type_id: Optional[UUID] = Field(alias="specificity_type")
     food_id: Optional[UUID] = Field(alias="food")
 

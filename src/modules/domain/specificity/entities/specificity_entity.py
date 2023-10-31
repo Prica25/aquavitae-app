@@ -25,10 +25,9 @@ class Specificity(BaseEntity):
     user = relationship("User", back_populates="specificities")
 
     def __init__(
-        self, description: String(255), antecedent_type_id: UUID, user_id: UUID, food_id: UUID, *args, **kwargs
+        self, specificity_type_id: UUID, user_id: UUID, food_id: UUID, *args, **kwargs
     ):
         super().__init__(*args, **kwargs)
-        self.description = description
-        self.antecedent_type_id = antecedent_type_id
+        self.specificity_type_id = specificity_type_id
         self.user_id = user_id
         self.food_id = food_id
