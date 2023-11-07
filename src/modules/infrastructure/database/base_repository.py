@@ -112,6 +112,8 @@ class BaseRepository(Generic[T]):
         return result
 
     async def create(self, _entity: Union[T, BaseModel], db: Session) -> T:
+        print(_entity)
+
         if isinstance(_entity, BaseModel):
             partial_data_entity = _entity.dict(exclude_unset=True)
             _entity = self.entity(**partial_data_entity)

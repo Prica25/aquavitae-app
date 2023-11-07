@@ -23,6 +23,7 @@ class Diagnosis(BaseEntity):
         self,
         main: String,
         send_by_doctor: Boolean,
+        user_id: UUID,
         secondary: String = None,
         bowel_function: String = None,
         *args,
@@ -31,5 +32,7 @@ class Diagnosis(BaseEntity):
         super().__init__(*args, **kwargs)
         self.main = main
         self.send_by_doctor = send_by_doctor
+        self.user_id = user_id
         self.secondary = secondary
         self.bowel_function = bowel_function
+       

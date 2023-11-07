@@ -5,8 +5,8 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class BaseOptionsDto(TypedDict):
-    excludeFields: bool
+# class BaseOptionsDto(TypedDict):
+#     excludeFields: bool
 
 
 class BaseDto(BaseModel):
