@@ -10,8 +10,8 @@ from src.modules.infrastructure.user.dto.user_dto import UserDto
 
 class AntecedentDto(BaseDto):
     description: constr(max_length=255)
-    antecedent_type: Optional[Union[AntecedentTypeDto, UUID]]
-    user: Optional[Union[UserDto, UUID]]
+    antecedent_type: Union[AntecedentTypeDto, UUID]
+    user: Union[UserDto, UUID]
 
     def __init__(self, **kwargs):
         if "antecedent_type" not in kwargs and "antecedent_type_id" in kwargs:

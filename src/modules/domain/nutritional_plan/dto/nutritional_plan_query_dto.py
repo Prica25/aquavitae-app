@@ -5,16 +5,15 @@ from pydantic import BaseModel, constr, Extra
 from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
 
-class FindAllAntecedentQueryDto(BaseModel):
-    description: Optional[constr(max_length=255)]
-    user: Optional[constr(max_length=255)]
+class FindAllNutritionalPlanQueryDto(BaseModel):
+    active: Optional[bool]
 
     class Config:
         extra = Extra.forbid
 
 
-class OrderByAntecedentQueryDto(BaseModel):
-    description: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
+class OrderByNutritionalPlanQueryDto(BaseModel):
+    validate_date: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
 
     class Config:
         extra = Extra.forbid

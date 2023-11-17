@@ -14,7 +14,6 @@ from src.modules.domain.antecedent.dto.antecedent.update_antecedent_dto import U
 from src.modules.domain.antecedent.entities.antecedent_entity import Antecedent
 from src.modules.domain.antecedent.repositories.antecedent_repository import AntecedentRepository
 
-
 class AntecedentService:
     def __init__(self):
         self.antecedent_repository = AntecedentRepository()

@@ -1,11 +1,8 @@
 from uuid import UUID
 
-from pydantic import BaseModel, confloat, Extra, Field
+from pydantic import BaseModel, Extra, Field
 
-
-class CreateMealsOptionsDto(BaseModel):
-    amount: confloat(ge=0.5, le=3, multiple_of=0.5) = 1.0
-    suggested_by_system: bool = False
+class CreateDiaryDto(BaseModel):
     item_id: UUID = Field(alias="item")
     nutritional_plan_has_meal_id: UUID = Field(alias="nutritional_plan_has_meal")
 

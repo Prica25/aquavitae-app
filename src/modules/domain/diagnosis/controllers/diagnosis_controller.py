@@ -31,7 +31,7 @@ from src.modules.domain.diagnosis.services.diagnosis_service import (
 from src.modules.infrastructure.database import get_db
 from src.modules.infrastructure.user.entities.user_entity import User
 
-diagnosis_router = APIRouter(tags=["Biochemical Data"], prefix="/diagnosis")
+diagnosis_router = APIRouter(tags=["Diagnosis"], prefix="/diagnosis")
 
 diagnosis_service = DiagnosisService()
 
