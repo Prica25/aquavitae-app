@@ -1,4 +1,5 @@
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel, constr, Extra
 
@@ -6,14 +7,14 @@ from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
 
 class FindAllSpecificityQueryDto(BaseModel):
-    user: Optional[constr(max_length=255)]
+    user_id: Optional[UUID]
 
     class Config:
         extra = Extra.forbid
 
 
 class OrderBySpecificityQueryDto(BaseModel):
-    user: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
+    user_id: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
 
     class Config:
         extra = Extra.forbid
