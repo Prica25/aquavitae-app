@@ -34,7 +34,7 @@ meals_options_service = MealsOptionsService()
     response_model=MealsOptionsDto,
     dependencies=[Depends(Auth([UserRole.ADMIN, UserRole.NUTRITIONIST]))],
 )
-async def create_meals_options_goal(
+async def create_meals_options(
     request: CreateMealsOptionsDto, database: Session = Depends(get_db)
 ) -> Optional[MealsOptionsDto]:
     return await meals_options_service.create_meals_options(request, database)

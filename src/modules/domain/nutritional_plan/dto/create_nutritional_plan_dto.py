@@ -5,6 +5,10 @@ from datetime import date
 from src.core.constants.enum.periods import Periods
 from pydantic import BaseModel, conint, Extra, Field
 
+class MealPlanItem(BaseModel):
+    meals_of_plan: UUID = Field(alias="meals_of_plan")
+    meal_date: date
+
 class CreateNutritionalPlanDto(BaseModel):
     calories_limit: Optional[conint()]
     lipids_limit: Optional[conint()]
@@ -14,7 +18,7 @@ class CreateNutritionalPlanDto(BaseModel):
     active: bool
     validate_date: date
     user_id: UUID = Field(alias="user")
-    meals_of_plan: Optional[List[UUID]]
+    meals_of_plan: Optional[List[MealPlanItem]]
     forbidden_foods: Optional[List[UUID]]
 
     class Config:

@@ -1,5 +1,5 @@
 from datetime import time
-from typing import List, Optional, Union
+from typing import Union
 from uuid import UUID
 
 from pydantic import constr

@@ -241,6 +241,8 @@ class CompleteNutritionalPlanInterface:
             meal_items[ceil(size * 0.3) : ceil(size * 0.6)],
         ]
 
+        print(splitted_meals)
+
         for splitted_item in splitted_meals:
             if not len(splitted_item):
                 continue

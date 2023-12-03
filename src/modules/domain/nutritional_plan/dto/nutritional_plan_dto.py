@@ -27,6 +27,7 @@ class NutritionalPlanDto(BaseDto):
 
         if (
             "forbidden_foods" in kwargs
+            and kwargs["forbidden_foods"] is not None
             and len(kwargs["forbidden_foods"]) > 0
             and isinstance(kwargs["forbidden_foods"][0], ForbiddenFoods)
         ):

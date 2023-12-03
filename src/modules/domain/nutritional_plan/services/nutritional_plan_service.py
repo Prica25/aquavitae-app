@@ -25,7 +25,7 @@ class NutritionalPlanService:
     def __init__(self):
         self.nutritional_plan_repository = NutritionalPlanRepository()
         self.nutritional_plan_has_meal_repository = NutritionalPlanHasMealRepository()
-        self.forbbiden_foods_repository = ForbiddenFoodsRepository()
+        self.forbidden_foods_repository = ForbiddenFoodsRepository()
 
     # ---------------------- PUBLIC METHODS ----------------------
     async def create_nutritional_plan(
@@ -36,23 +36,38 @@ class NutritionalPlanService:
                 meals_of_plan = deepcopy(nutritional_plan_dto.meals_of_plan) if nutritional_plan_dto.meals_of_plan else []
                 delattr(nutritional_plan_dto, "meals_of_plan")
 
-                forbbiden_foods = deepcopy(nutritional_plan_dto.forbbiden_foods) if nutritional_plan_dto.forbbiden_foods else []
-                delattr(nutritional_plan_dto, "forbbiden_foods")
+                forbidden_foods = deepcopy(nutritional_plan_dto.forbidden_foods) if nutritional_plan_dto.forbidden_foods else []
+                delattr(nutritional_plan_dto, "forbidden_foods")
+
+                active_nutritional_plan = await self.nutritional_plan_repository.find_one(
+                    {
+                        "where": [NutritionalPlan.user_id == nutritional_plan_dto.user_id, NutritionalPlan.active == True],
+                    },
+                    db,
+                )
+
+                if active_nutritional_plan is not None:
+                    await self.nutritional_plan_repository.update(
+                        {"where": NutritionalPlan.id == active_nutritional_plan.id},
+                        UpdateNutritionalPlanDto(active=False, user=nutritional_plan_dto.user_id),
+                        db,
+                    )
+
 
                 new_nutritional_plan = await self.nutritional_plan_repository.create(nutritional_plan_dto, db)
 
                 for meal_of_plan in meals_of_plan:
                     npm_dto = NutritionalPlanHasMeal(
-                        nutritional_plan_id=new_nutritional_plan.id, meals_of_plan_id=meal_of_plan
+                        nutritional_plan_id=new_nutritional_plan.id, meals_of_plan_id=meal_of_plan.meals_of_plan, meal_date=meal_of_plan.meal_date
                     )
                     await self.nutritional_plan_has_meal_repository.create(npm_dto, db)
 
-                for forbbiden_food in forbbiden_foods:
+                for forbidden_food in forbidden_foods:
                     ff_dto = ForbiddenFoods(
-                        nutritional_plan_id=new_nutritional_plan.id, item_id=forbbiden_food
+                        nutritional_plan_id=new_nutritional_plan.id, item_id=forbidden_food
                     )
-                    new_nutritional_plan.forbbiden_foods += [
-                        await self.forbbiden_foods_repository.create(ff_dto, db)
+                    new_nutritional_plan.forbidden_foods += [
+                        await self.forbidden_foods_repository.create(ff_dto, db)
                     ]
 
             response = NutritionalPlanDto(**new_nutritional_plan.__dict__)
@@ -153,7 +168,7 @@ class NutritionalPlanService:
                         ff_dto = ForbiddenFoods(
                             nutritional_plan_id=nutritional_plan_id, item_id=ff
                         )
-                        await self.forbbiden_foods_repository.create(npm_dto, db)
+                        await self.forbbiden_foods_repository.create(ff_dto, db)
                         response["affected"] += 1
 
             db.commit()
