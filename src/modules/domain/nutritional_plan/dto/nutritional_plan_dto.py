@@ -36,6 +36,7 @@ class NutritionalPlanDto(BaseDto):
                 for forbidden in kwargs["forbidden_foods"]
             ]
 
+        
         super().__init__(**kwargs)
 
     class Config:

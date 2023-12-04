@@ -36,7 +36,6 @@ class MealsOptions(BaseEntity):
         *args,
         **kwargs,
     ):
-        print(suggested_by_system, item_id, amount)
         super().__init__(*args, **kwargs)
         self.suggested_by_system = suggested_by_system
         self.item_id = item_id

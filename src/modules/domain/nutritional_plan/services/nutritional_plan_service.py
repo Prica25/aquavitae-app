@@ -98,7 +98,7 @@ class NutritionalPlanService:
         nutritional_plan = await self.nutritional_plan_repository.find_one_or_fail(
             {
                 "where": NutritionalPlan.id == nutritional_plan_id,
-                "relations": ["nutritional_plan_has_meal"],
+                "relations": ["user"],
             },
             db,
         )

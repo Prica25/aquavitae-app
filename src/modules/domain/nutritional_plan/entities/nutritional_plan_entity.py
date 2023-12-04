@@ -29,6 +29,7 @@ class NutritionalPlan(BaseEntity):
         uselist=True,
         cascade="all, delete-orphan",
     )
+    
     nutritional_plan_meals = relationship(
         "NutritionalPlanHasMeal",
         back_populates="nutritional_plan",

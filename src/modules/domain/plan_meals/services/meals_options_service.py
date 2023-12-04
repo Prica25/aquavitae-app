@@ -29,14 +29,14 @@ class MealsOptionsService:
             with db.begin_nested():
                 nutritional_plan_has_meal = await self.nutritional_plan_has_meals_repository.find_one(
                     {
-                        "where": [NutritionalPlanHasMeal.nutritional_plan_id == meals_options_dto.nutritional_plan_id, NutritionalPlanHasMeal.meals_of_plan_id == meals_options_dto.meals_of_plan_id],
+                        "where": [NutritionalPlanHasMeal.nutritional_plan_id == meals_options_dto.nutritional_plan_id, NutritionalPlanHasMeal.meals_option_id == meals_options_dto.meals_option_id],
                     },
                     db,
                 )
 
                 meals_options_dto.nutritional_plan_has_meal_id = nutritional_plan_has_meal.id
                 delattr(meals_options_dto, "nutritional_plan_id")
-                delattr(meals_options_dto, "meals_of_plan_id")
+                delattr(meals_options_dto, "meals_option_id")
             
                 new_meals_options = await self.meals_options_repository.create(meals_options_dto, db)
                 
@@ -62,13 +62,16 @@ class MealsOptionsService:
     ) -> Optional[UpdateResult]:
         return await self.meals_options_repository.update(id, update_meals_options_dto, db)
 
-    async def get_all_meals_options_paginated(
+    async def get_all_meals_options(
         self, pagination: FindManyOptions, db: Session
     ) -> Optional[PaginationResponseDto[MealsOptionsDto]]:
-        [all_meals_options, total] = await self.meals_options_repository.find_and_count(pagination, db)
+        [all_meals_option, total] = await self.meals_options_repository.find_and_count(
+            pagination,
+            db,
+        )
 
         return create_pagination_response_dto(
-            [MealsOptionsDto.from_orm(meals_options) for meals_options in all_meals_options],
+            [MealsOptionsDto(**meals_option.__dict__) for meals_option in all_meals_option],
             total,
             pagination["skip"],
             pagination["take"],

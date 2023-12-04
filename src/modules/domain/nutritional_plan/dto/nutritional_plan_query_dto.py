@@ -7,6 +7,7 @@ from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
 class FindAllNutritionalPlanQueryDto(BaseModel):
     active: Optional[bool]
+    user_id: Optional[constr(max_length=255)]
 
     class Config:
         extra = Extra.forbid

@@ -4,6 +4,12 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
+from src.core.common.dto.pagination_response_dto import (
+    create_pagination_response_dto,
+    PaginationResponseDto,
+)
+from src.core.types.find_many_options_type import FindManyOptions
+
 from src.modules.domain.plan_meals.dto.nutritional_plan_has_meal.create_nutritional_plan_has_meal_dto import (
     CreateNutritionalPlanHasMealDto,
 )
@@ -30,6 +36,21 @@ class NutritionalPlanHasMealService:
 
         new_nphm = self.nphm_repository.save(new_nphm, db)
         return NutritionalPlanHasMealDto(**new_nphm.__dict__)
+    
+    async def get_all_nutritional_plan_has_meals(
+        self, pagination: FindManyOptions, db: Session
+    ) -> Optional[PaginationResponseDto[NutritionalPlanHasMealDto]]:
+        [all_nutritional_plan_has_meals, total] = await self.nphm_repository.find_and_count(
+            pagination,
+            db,
+        )
+
+        return create_pagination_response_dto(
+            [NutritionalPlanHasMealDto(**nutritional_plan_has_meal.__dict__) for nutritional_plan_has_meal in all_nutritional_plan_has_meals],
+            total,
+            pagination["skip"],
+            pagination["take"],
+        )
 
     # ---------------------- INTERFACE METHODS ----------------------
     async def get_nutritional_plan_has_meal_by_date(

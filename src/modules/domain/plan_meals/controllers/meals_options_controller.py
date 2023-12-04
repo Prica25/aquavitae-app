@@ -54,7 +54,7 @@ async def get_all_meals_optionss(
     ),
     database: Session = Depends(get_db),
 ) -> Optional[PaginationResponseDto[MealsOptionsDto]]:
-    return await meals_options_service.get_all_meals_optionss(pagination, database)
+    return await meals_options_service.get_all_meals_options(pagination, database)
 
 
 @meals_options_router.get(

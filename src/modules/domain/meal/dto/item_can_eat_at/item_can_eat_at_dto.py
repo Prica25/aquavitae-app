@@ -7,7 +7,7 @@ from src.modules.domain.meal.dto.type_of_meal.type_of_meal_dto import TypeOfMeal
 
 class ItemCanEatAtDto(BaseDto):
     type_of_meal: Optional[Union[TypeOfMealDto, UUID]]
-    item: Optional[UUID]
+    # item: Optional[UUID]
 
     def __init__(self, **kwargs):
         if "type_of_meal" not in kwargs and "type_of_meal_id" in kwargs:

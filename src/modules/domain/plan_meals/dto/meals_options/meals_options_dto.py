@@ -11,7 +11,7 @@ from src.modules.domain.plan_meals.dto.nutritional_plan_has_meal.nutritional_pla
 class MealsOptionsDto(BaseDto):
     amount: confloat(ge=0.5, le=3, multiple_of=0.5)
     suggested_by_system: Optional[bool]
-    item: Union[ItemDto, UUID]
+    item: Optional[Union[ItemDto, UUID]]
     nutritional_plan_has_meal: Optional[Union[NutritionalPlanHasMealDto, UUID]]
 
     def __init__(self, **kwargs):
