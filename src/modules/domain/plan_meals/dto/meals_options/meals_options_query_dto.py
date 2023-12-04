@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, constr, confloat, Extra
+from pydantic import BaseModel, constr, Extra
 
 from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
