@@ -41,14 +41,17 @@ class DiaryService:
         self, id: str, update_diary_dto: UpdateDiaryDto, db: Session
     ) -> Optional[UpdateResult]:
         return await self.diary_repository.update(id, update_diary_dto, db)
-
-    async def get_all_diary_paginated(
+    
+    async def get_all_diaries(
         self, pagination: FindManyOptions, db: Session
     ) -> Optional[PaginationResponseDto[DiaryDto]]:
-        [all_diary, total] = await self.diary_repository.find_and_count(pagination, db)
+        [all_diaries, total] = await self.diary_repository.find_and_count(
+            pagination,
+            db,
+        )
 
         return create_pagination_response_dto(
-            [DiaryDto.from_orm(diary) for diary in all_diary],
+            [DiaryDto(**diary.__dict__) for diary in all_diaries],
             total,
             pagination["skip"],
             pagination["take"],

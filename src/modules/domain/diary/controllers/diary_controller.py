@@ -34,7 +34,7 @@ diary_service = DiaryService()
     response_model=DiaryDto,
     dependencies=[Depends(Auth([UserRole.ADMIN, UserRole.NUTRITIONIST]))],
 )
-async def create_diary_goal(
+async def create_diary(
     request: CreateDiaryDto, database: Session = Depends(get_db)
 ) -> Optional[DiaryDto]:
     return await diary_service.create_diary(request, database)
@@ -46,7 +46,7 @@ async def create_diary_goal(
     response_model_exclude_unset=True,
     dependencies=[Depends(Auth([UserRole.ADMIN, UserRole.NUTRITIONIST]))],
 )
-async def get_all_diarys(
+async def get_all_diaries(
     pagination: FindManyOptions = Depends(
         GetPagination(
             Diary, DiaryDto, FindAllDiaryQueryDto, OrderByDiaryQueryDto
@@ -54,7 +54,7 @@ async def get_all_diarys(
     ),
     database: Session = Depends(get_db),
 ) -> Optional[PaginationResponseDto[DiaryDto]]:
-    return await diary_service.get_all_diarys(pagination, database)
+    return await diary_service.get_all_diaries(pagination, database)
 
 
 @diary_router.get(
