@@ -9,5 +9,7 @@ class FindAllDiaryQueryDto(BaseModel):
 
 
 class OrderByDiaryQueryDto(BaseModel):
+    amount: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]
+
     class Config:
         extra = Extra.forbid

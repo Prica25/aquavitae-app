@@ -7,6 +7,7 @@ from src.modules.domain.plan_meals.dto.nutritional_plan_has_meal.nutritional_pla
 
 
 class DiaryDto(BaseDto):
+    amount: confloat(ge=0.5, le=3, multiple_of=0.5)
     item: Union[ItemDto, UUID]
     nutritional_plan_has_meal: Optional[Union[NutritionalPlanHasMealDto, UUID]]
 
