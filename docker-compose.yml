@@ -6,6 +6,8 @@ services:
     image: aquavitae_app
     ports:
       - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ./src/static/images:/app/src/static/images
     networks:
       network:
         ipv4_address: 172.28.0.2
