@@ -114,7 +114,7 @@ class UserService:
                 if "image" in locals():
                     if image:
                         user.profile_photo = self.image_utils.save_image(str(user.id), image)
-                        update_user_dto.profile_photo = f"{user.id}.{image[1]}"
+                        update_user_dto.profile_photo = user.profile_photo
                     else:
                         self.image_utils.delete_image(str(user.profile_photo))
                         update_user_dto.profile_photo = None

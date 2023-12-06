@@ -5,6 +5,8 @@ from typing import Optional, TypedDict, Union
 from PIL import Image
 from sqlalchemy_utils import URLType
 
+from io import BytesIO
+
 from config import ROOT_DIR
 from src.core.types.exceptions_type import BadRequestException
 
@@ -39,7 +41,17 @@ class ImageUtils:
 
     def get_image(self, filename: Union[str, URLType] = None) -> Optional[bytes]:
         if filename:
-            return base64.b64encode(Image.open(f"{self.path}/{filename}").tobytes())
+            with Image.open(f"{self.path}/{filename}") as image:
+                image_format = image.format.lower()
+                
+                buffered = BytesIO()
+                image.save(buffered, format=image_format)
+                img_bytes = buffered.getvalue()
+
+                img_base64 = base64.b64encode(img_bytes).decode()
+
+                # Return the formatted string
+                return f"data:image/{image_format};base64,{img_base64}"
 
         return None
 
