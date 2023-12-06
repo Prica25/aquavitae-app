@@ -38,6 +38,7 @@ class BiochemicalData(BaseEntity):
 
     def __init__(
         self,
+        appointment_id: UUID,
         total_proteins: Float(2) = None,
         albumin: Float(2) = None,
         urea: Float(2) = None,
@@ -56,7 +57,6 @@ class BiochemicalData(BaseEntity):
         ast_tgo: Float(2) = None,
         alt_tgp: Float(2) = None,
         ygt: Float(2) = None,
-        appointment_id: UUID = None,
         *args,
         **kwargs
     ):

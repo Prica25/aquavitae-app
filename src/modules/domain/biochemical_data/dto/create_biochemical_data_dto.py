@@ -23,7 +23,7 @@ class CreateBiochemicalDataDto(BaseModel):
     ast_tgo: Optional[confloat(ge=0)]
     alt_tgp: Optional[confloat(ge=0)]
     ygt: Optional[confloat(ge=0)]
-    appointment: UUID = Field(alias="appointment")
+    appointment_id: UUID = Field(alias="appointment")
 
     class Config:
         extra = Extra.forbid

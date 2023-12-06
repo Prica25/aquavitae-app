@@ -37,28 +37,10 @@ class BiochemicalDataService:
     async def create_biochemical_data(
         self, biochemical_data_dto: CreateBiochemicalDataDto, db: Session
     ) -> Optional[BiochemicalDataDto]:
-        biochemical_data_dto = self.__verify_values(biochemical_data_dto)
+        new_biochemical_data = await self.biochemical_data_repository.create(biochemical_data_dto, db)
 
-        try:
-            with db.begin_nested():
-                new_biochemical_data = BiochemicalData(
-                    **biochemical_data_dto.dict(exclude_unset=True)
-                )
-                new_biochemical_data.id = uuid.uuid4()
-
-                new_biochemical_data = await self.biochemical_data_repository.create(
-                    new_biochemical_data, db
-                )
-
-                new_biochemical_data_dto = deepcopy(new_biochemical_data)
-
-                response = BiochemicalDataDto(**new_biochemical_data_dto.__dict__)
-
-            db.commit()
-            return response
-        except Exception as e:
-            db.rollback()
-            raise e
+        new_biochemical_data = self.biochemical_data_repository.save(new_biochemical_data, db)
+        return BiochemicalDataDto(**new_biochemical_data.__dict__)
 
     async def get_all_biochemical_data(
         self, pagination: FindManyOptions, db: Session
