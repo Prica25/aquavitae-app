@@ -1,4 +1,6 @@
 from uuid import UUID
+from datetime import date
+
 from typing import Optional
 from pydantic import BaseModel, confloat, Extra, Field
 
@@ -9,6 +11,7 @@ class CreateMealsOptionsDto(BaseModel):
     nutritional_plan_id: Optional[UUID] = Field(alias="nutritional_plan")
     meals_of_plan_id: Optional[UUID] = Field(alias="meals_of_plan")
     nutritional_plan_has_meal_id: Optional[UUID] = Field(alias="nutritional_plan_has_meal")
+    meal_date: Optional[date]
 
     class Config:
         extra = Extra.forbid

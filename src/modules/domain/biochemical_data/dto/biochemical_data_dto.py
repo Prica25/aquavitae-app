@@ -1,11 +1,10 @@
 from typing import Optional, Union
 from uuid import UUID
 
-from pydantic import confloat, conint
+from pydantic import confloat
 
 from src.core.common.dto.base_dto import BaseDto
 from src.modules.domain.appointment.dto.appointment.appointment_dto import AppointmentDto
-
 
 class BiochemicalDataDto(BaseDto):
     total_proteins: Optional[confloat(ge=0)]
@@ -26,7 +25,7 @@ class BiochemicalDataDto(BaseDto):
     ast_tgo: Optional[confloat(ge=0)]
     alt_tgp: Optional[confloat(ge=0)]
     ygt: Optional[confloat(ge=0)]
-    appointment: Union[AppointmentDto, UUID]
+    appointment: Optional[Union[AppointmentDto, UUID]]
 
     def __init__(self, **kwargs):
         if "appointment" not in kwargs and "appointment_id" in kwargs:

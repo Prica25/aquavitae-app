@@ -1,8 +1,7 @@
 from typing import Optional
 from uuid import UUID
 
-from pydantic import BaseModel, confloat, conint, Extra, Field
-
+from pydantic import BaseModel, confloat, Extra, Field
 
 class CreateBiochemicalDataDto(BaseModel):
     total_proteins: Optional[confloat(ge=0)]

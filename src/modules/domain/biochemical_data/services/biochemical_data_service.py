@@ -46,26 +46,20 @@ class BiochemicalDataService:
         self, pagination: FindManyOptions, db: Session
     ) -> Optional[PaginationResponseDto[BiochemicalDataDto]]:
         [
-            all_user_biochemical_data,
+            all_biochemical_data,
             total,
         ] = await self.biochemical_data_repository.find_and_count(
             pagination,
             db,
         )
 
-        all_biochemical_data_dto = []
-        for biochemical_data in all_user_biochemical_data:
-            all_biochemical_data_dto.append(
-                BiochemicalDataDto(**biochemical_data.__dict__)
-            )
-
         return create_pagination_response_dto(
-            all_biochemical_data_dto,
+            [BiochemicalDataDto(**biochemical_data.__dict__) for biochemical_data in all_biochemical_data],
             total,
             pagination["skip"],
             pagination["take"],
         )
-
+    
     async def get_biochemical_data_by_id(
         self, biochemical_data_id: str, db: Session
     ) -> Optional[BiochemicalDataDto]:

@@ -27,16 +27,16 @@ class MealsOptionsService:
     ) -> Optional[MealsOptionsDto]:
         try:
             with db.begin_nested():
-                nutritional_plan_has_meal = await self.nutritional_plan_has_meals_repository.find_one(
-                    {
-                        "where": [NutritionalPlanHasMeal.nutritional_plan_id == meals_options_dto.nutritional_plan_id, NutritionalPlanHasMeal.meals_of_plan_id == meals_options_dto.meals_of_plan_id],
-                    },
-                    db,
+                npm_dto = NutritionalPlanHasMeal(
+                    nutritional_plan_id=meals_options_dto.nutritional_plan_id, meals_of_plan_id=meals_options_dto.meals_of_plan_id, meal_date=meals_options_dto.meal_date
                 )
+                nutritional_plan_has_meal = await self.nutritional_plan_has_meals_repository.create(npm_dto, db)
+
 
                 meals_options_dto.nutritional_plan_has_meal_id = nutritional_plan_has_meal.id
                 delattr(meals_options_dto, "nutritional_plan_id")
                 delattr(meals_options_dto, "meals_of_plan_id")
+                delattr(meals_options_dto, "meal_date")
             
                 new_meals_options = await self.meals_options_repository.create(meals_options_dto, db)
                 

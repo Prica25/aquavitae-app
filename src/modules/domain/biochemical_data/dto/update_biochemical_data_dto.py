@@ -1,8 +1,6 @@
-from datetime import date
 from typing import Optional
 
-from pydantic import BaseModel, confloat, conint, Extra
-
+from pydantic import BaseModel, confloat, Extra
 
 class UpdateBiochemicalDataDto(BaseModel):
     total_proteins: Optional[confloat(ge=0)]
@@ -24,7 +22,5 @@ class UpdateBiochemicalDataDto(BaseModel):
     alt_tgp: Optional[confloat(ge=0)]
     ygt: Optional[confloat(ge=0)]
 
-
     class Config:
         extra = Extra.forbid
-

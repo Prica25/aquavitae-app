@@ -5,13 +5,11 @@ from pydantic import BaseModel, constr, Extra
 
 from src.core.constants.regex_expressions import REGEX_ORDER_BY_QUERY
 
-
 class FindAllBiochemicalDataQueryDto(BaseModel):
     appointment_id: UUID
 
     class Config:
         extra = Extra.forbid
-
 
 class OrderByBiochemicalDataQueryDto(BaseModel):
     total_proteins: Optional[constr(regex=REGEX_ORDER_BY_QUERY)]

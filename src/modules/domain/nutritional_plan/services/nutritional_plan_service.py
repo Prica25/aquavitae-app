@@ -33,9 +33,6 @@ class NutritionalPlanService:
     ) -> Optional[NutritionalPlanDto]:
         try:
             with db.begin_nested():
-                meals_of_plan = deepcopy(nutritional_plan_dto.meals_of_plan) if nutritional_plan_dto.meals_of_plan else []
-                delattr(nutritional_plan_dto, "meals_of_plan")
-
                 forbidden_foods = deepcopy(nutritional_plan_dto.forbidden_foods) if nutritional_plan_dto.forbidden_foods else []
                 delattr(nutritional_plan_dto, "forbidden_foods")
 
@@ -55,12 +52,6 @@ class NutritionalPlanService:
 
 
                 new_nutritional_plan = await self.nutritional_plan_repository.create(nutritional_plan_dto, db)
-
-                for meal_of_plan in meals_of_plan:
-                    npm_dto = NutritionalPlanHasMeal(
-                        nutritional_plan_id=new_nutritional_plan.id, meals_of_plan_id=meal_of_plan.meals_of_plan, meal_date=meal_of_plan.meal_date
-                    )
-                    await self.nutritional_plan_has_meal_repository.create(npm_dto, db)
 
                 for forbidden_food in forbidden_foods:
                     ff_dto = ForbiddenFoods(
